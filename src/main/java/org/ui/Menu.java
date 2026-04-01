@@ -1,5 +1,6 @@
 package org.ui;
 
+import org.Config.ConnectionSQL;
 import org.entities.*;
 import org.services.*;
 import java.util.Scanner;
@@ -11,6 +12,12 @@ public class Menu {
     private final TaskService taskService = new TaskService();
     private final CategoryService categoryService = new CategoryService();
     private final CommentService commentService = new CommentService();
+
+    private ConnectionSQL connectionSQL;
+
+    public Menu(ConnectionSQL connectionSQL) {
+        this.connectionSQL = connectionSQL;
+    }
 
     public void start() {
         if (handleAuthentication()) {
