@@ -1,6 +1,6 @@
-package org.ui;
+package org.views;
 
-import org.entities.Task;
+import org.models.Task;
 import org.enums.Status;
 
 import java.text.SimpleDateFormat;

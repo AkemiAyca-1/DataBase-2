@@ -1,4 +1,4 @@
-package org.entities;
+package org.models;
 
 public class Category {
     private int idCategory;

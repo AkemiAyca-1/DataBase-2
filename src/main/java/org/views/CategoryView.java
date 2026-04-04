@@ -1,6 +1,6 @@
-package org.ui;
+package org.views;
 
-import org.entities.Category;
+import org.models.Category;
 
 import java.util.List;
 import java.util.Scanner;

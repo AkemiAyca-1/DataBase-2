@@ -1,8 +1,8 @@
 package org.controllers;
 
-import org.entities.Task;
+import org.models.Task;
 import org.repository.TaskRepository;
-import org.ui.TaskView;
+import org.views.TaskView;
 
 import java.sql.SQLException;
 import java.util.List;

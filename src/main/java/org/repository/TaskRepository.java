@@ -1,6 +1,6 @@
 package org.repository;
 
-import org.entities.Task;
+import org.models.Task;
 import org.enums.Status;
 
 import java.sql.*;

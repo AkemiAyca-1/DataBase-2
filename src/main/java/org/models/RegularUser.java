@@ -1,6 +1,4 @@
-package org.entities;
-
-import org.abstracts.User;
+package org.models;
 
 public class RegularUser extends User {
     @Override

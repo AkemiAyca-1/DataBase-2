@@ -1,6 +1,5 @@
-package org.ui;
+package org.views;
 
-import org.entities.*;
 import org.repository.*;
 import org.controllers.*;
 

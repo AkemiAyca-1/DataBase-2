@@ -1,8 +1,8 @@
 package org.controllers;
 
-import org.entities.Category;
+import org.models.Category;
 import org.repository.CategoryRepository;
-import org.ui.CategoryView;
+import org.views.CategoryView;
 
 import java.sql.SQLException;
 import java.util.List;

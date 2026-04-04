@@ -1,6 +1,6 @@
 package org.repository;
 
-import org.entities.Category;
+import org.models.Category;
 
 import java.sql.*;
 import java.util.ArrayList;

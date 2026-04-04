@@ -1,4 +1,4 @@
-package org.abstracts;
+package org.models;
 
 public abstract class User{
     private int id;
