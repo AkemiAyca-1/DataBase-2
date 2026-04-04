@@ -1,22 +1,27 @@
 package org.ui;
 
-import org.Config.ConnectionSQL;
 import org.entities.*;
-import org.services.*;
+import org.repository.*;
+import org.controllers.*;
+
+import java.sql.Connection;
 import java.util.Scanner;
 
 public class Menu {
     private final Scanner scanner = new Scanner(System.in);
-    private final UserService userService = new UserService();
-    private final WorkspaceService workspaceService = new WorkspaceService();
-    private final TaskService taskService = new TaskService();
-    private final CategoryService categoryService = new CategoryService();
-    private final CommentService commentService = new CommentService();
 
-    private ConnectionSQL connectionSQL;
+    private final CategoryController categoryController;
+    private final TaskController taskController;
 
-    public Menu(ConnectionSQL connectionSQL) {
-        this.connectionSQL = connectionSQL;
+    public Menu(Connection connectionSQL) {
+        CategoryRepository categoryRepo = new CategoryRepository(connectionSQL);
+        TaskRepository taskRepo         = new TaskRepository(connectionSQL);
+
+        CategoryView categoryView = new CategoryView(scanner);
+        TaskView taskView         = new TaskView(scanner);
+
+        this.categoryController = new CategoryController(categoryRepo, categoryView);
+        this.taskController     = new TaskController(taskRepo, taskView);
     }
 
     public void start() {
@@ -31,18 +36,18 @@ public class Menu {
         scanner.nextLine();
         System.out.print("Password: ");
         scanner.nextLine();
-        System.out.println("Access Granted.");
+        System.out.println("Verifcación exitosa.");
         return true;
     }
 
     private void mainMenu() {
         while (true) {
             System.out.println("\n--- MAIN MENU ---");
-            System.out.println("1. User Management");
-            System.out.println("2. Workspace Management");
+            System.out.println("1. User Management (No disponible)");
+            System.out.println("2. Workspace Management (No disponible)");
             System.out.println("3. Task Management");
             System.out.println("4. Category Management");
-            System.out.println("5. Comment Management");
+            System.out.println("5. Comment Management (No disponible)");
             System.out.println("0. Exit");
             System.out.print("Select an option: ");
 
@@ -50,70 +55,63 @@ public class Menu {
             if (choice == 0) break;
 
             switch (choice) {
-                case 1 -> crudMenu("User");
-                case 2 -> crudMenu("Workspace");
-                case 3 -> crudMenu("Task");
-                case 4 -> crudMenu("Category");
-                case 5 -> crudMenu("Comment");
+                case 3 -> taskMenu();
+                case 4 -> categoryMenu();
                 default -> System.out.println("Invalid option.");
             }
         }
     }
 
-    private void crudMenu(String entityName) {
+    private void categoryMenu() {
         while (true) {
-            System.out.println("\n--- " + entityName.toUpperCase() + " CRUD ---");
-            System.out.println("1. Create " + entityName);
-            System.out.println("2. Read " + entityName);
-            System.out.println("3. Update " + entityName);
-            System.out.println("4. Delete " + entityName);
-            System.out.println("5. List All");
-            System.out.println("0. Back");
-            System.out.print("Option: ");
+            System.out.println("      GESTIÓN DE CATEGORÍAS");
+            System.out.println("  1. Crear");
+            System.out.println("  2. Buscar por ID");
+            System.out.println("  3. Actualizar");
+            System.out.println("  4. Eliminar");
+            System.out.println("  5. Listar todas");
+            System.out.println("  6. Listar por usuario");
+            System.out.println("  0. Volver");
+            System.out.print("  Opción: ");
 
-            int choice = Integer.parseInt(scanner.nextLine());
-            if (choice == 0) break;
-
-            executeAction(entityName, choice);
+            String opt = scanner.nextLine().trim();
+            switch (opt) {
+                case "1" -> categoryController.create();
+                case "2" -> categoryController.readById();
+                case "3" -> categoryController.update();
+                case "4" -> categoryController.delete();
+                case "5" -> categoryController.listAll();
+                case "6" -> categoryController.listByUser();
+                case "0" -> { return; }
+                default  -> System.out.println("  Opción inválida.");
+            }
         }
     }
 
-    private void executeAction(String entity, int action) {
-        switch (entity) {
-            case "User" -> {
-                if (action == 1) userService.create(new RegularUser());
-                if (action == 2) userService.read(1);
-                if (action == 3) userService.update(new RegularUser());
-                if (action == 4) userService.delete(1);
-                if (action == 5) userService.listAll();
-            }
-            case "Workspace" -> {
-                if (action == 1) workspaceService.create(new Workspace());
-                if (action == 2) workspaceService.read(1);
-                if (action == 3) workspaceService.update(new Workspace());
-                if (action == 4) workspaceService.delete(1);
-                if (action == 5) workspaceService.listAll();
-            }
-            case "Task" -> {
-                if (action == 1) taskService.create(new Task());
-                if (action == 2) taskService.read(1);
-                if (action == 3) taskService.update(new Task());
-                if (action == 4) taskService.delete(1);
-                if (action == 5) taskService.listAll();
-            }
-            case "Category" -> {
-                if (action == 1) categoryService.create(new Category());
-                if (action == 2) categoryService.read(1);
-                if (action == 3) categoryService.update(new Category());
-                if (action == 4) categoryService.delete(1);
-                if (action == 5) categoryService.listAll();
-            }
-            case "Comment" -> {
-                if (action == 1) commentService.create(new Comment());
-                if (action == 2) commentService.read(1);
-                if (action == 3) commentService.update(new Comment());
-                if (action == 4) commentService.delete(1);
-                if (action == 5) commentService.listAll();
+    private void taskMenu() {
+        while (true) {
+            System.out.println("          GESTIÓN DE TAREAS");
+            System.out.println("  1. Crear");
+            System.out.println("  2. Buscar por ID");
+            System.out.println("  3. Actualizar");
+            System.out.println("  4. Eliminar");
+            System.out.println("  5. Listar todas");
+            System.out.println("  6. Listar por categoría");
+            System.out.println("  7. Listar por user_workspace");
+            System.out.println("  0. Volver");
+            System.out.print("  Opción: ");
+
+            String opt = scanner.nextLine().trim();
+            switch (opt) {
+                case "1" -> taskController.create();
+                case "2" -> taskController.readById();
+                case "3" -> taskController.update();
+                case "4" -> taskController.delete();
+                case "5" -> taskController.listAll();
+                case "6" -> taskController.listByCategory();
+                case "7" -> taskController.listByUserWorkspace();
+                case "0" -> { return; }
+                default  -> System.out.println("  Opción inválida.");
             }
         }
     }
