@@ -1,23 +1,59 @@
 package org.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Workspace {
-    public int id;
-    public String name;
+    private int id;
+    private String name;
+    private List<User> members;
 
     public Workspace(){
-
+        this.members = new ArrayList<>();
     }
 
-    public void addUser(User user){}
+    public Workspace(String name){
+        this.name = name;
+        this.members = new ArrayList<>();
+    }
 
-    public void addMultipleUsers(List<User> users){}
+    public Workspace(int id, String name){
+        this.id = id;
+        this.name = name;
+        this.members = new ArrayList<>();
+    }
 
-    public void removeMember(User user){}
+    public void addUser(User user){
+        if(user != null && !members.contains(user)){
+            members.add(user);
+        }
+    }
 
-    public void renameWorkspace(String newName){}
+    public void addMultipleUsers(List<User> users){
+        for(User u: users){
+            if(u != null && !members.contains(u)){
+                members.add(u);
+            }
+        }
+    }
 
+    public void removeMember(User user){
+        members.remove(user);
+    }
 
+    public void renameWorkspace(String newName){
+        this.name = newName;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
 }

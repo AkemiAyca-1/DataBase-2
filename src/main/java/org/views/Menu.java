@@ -13,21 +13,23 @@ public class Menu {
     private final TaskController taskController;
 //    TaskComment:
     private final TaskCommentController commentController;
+    private final WorkspaceController workspaceController;
 
     public Menu(Connection connectionSQL) {
         CategoryRepository categoryRepo = new CategoryRepository(connectionSQL);
         TaskRepository taskRepo         = new TaskRepository(connectionSQL);
         TaskCommentRepository taskCommentRepository = new TaskCommentRepository(connectionSQL);
-
+        WorkspaceRepository workspaceRepo = new WorkspaceRepository(connectionSQL);
 
         CategoryView categoryView = new CategoryView(scanner);
         TaskView taskView         = new TaskView(scanner);
         TaskCommentView taskCommentView = new TaskCommentView(scanner);
-
+        WorkspaceView workspaceView = new WorkspaceView(scanner);
 
         this.categoryController = new CategoryController(categoryRepo, categoryView);
         this.taskController     = new TaskController(taskRepo, taskView);
         this.commentController = new TaskCommentController(taskCommentRepository, taskCommentView);
+        this.workspaceController = new WorkspaceController(workspaceRepo, workspaceView);
     }
 
     public void start() {
@@ -50,7 +52,7 @@ public class Menu {
         while (true) {
             System.out.println("\n--- MAIN MENU ---");
             System.out.println("1. User Management (No disponible)");
-            System.out.println("2. Workspace Management (No disponible)");
+            System.out.println("2. Workspace Management");
             System.out.println("3. Task Management");
             System.out.println("4. Category Management");
             System.out.println("5. Comment Management ");
@@ -62,6 +64,7 @@ public class Menu {
             if (choice == 0) break;
 
             switch (choice) {
+                case 2 -> workspaceMenu();
                 case 3 -> taskMenu();
                 case 4 -> categoryMenu();
                 case 5 -> commentMenu();
@@ -150,6 +153,34 @@ public class Menu {
 //                case "10" -> commentController.delete();
                 case "0" -> { return; }
                 default  -> System.out.println("  Opción inválida.");
+            }
+        }
+    }
+
+    private void workspaceMenu() {
+        while (true) {
+            System.out.println("\nWORKSPACES");
+            System.out.println("1.Crear workspace");
+            System.out.println("2.Listar todos los workspaces");
+            System.out.println("3.Renombrar workspace");
+            System.out.println("4.Eliminar workspace");
+            System.out.println("5.Agregar un usuario");
+            System.out.println("6.Eliminar miembro");
+            System.out.println("7.Listar miembros");
+            System.out.println("0.Volver");
+            System.out.print("Opción: ");
+
+            String opt = scanner.nextLine().trim();
+            switch (opt) {
+                case "1" -> workspaceController.create();
+                case "2" -> workspaceController.listAll();
+                case "3" -> workspaceController.renameWorkspace();
+                case "4" -> workspaceController.delete();
+                case "5" -> workspaceController.addMember();
+                case "6" -> workspaceController.deleteMember();
+                case "7" -> workspaceController.listMembers();
+                case "0" -> { return; }
+                default  -> System.out.println("Opción inválida.");
             }
         }
     }
