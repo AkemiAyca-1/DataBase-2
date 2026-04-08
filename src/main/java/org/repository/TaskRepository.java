@@ -83,7 +83,7 @@ public class TaskRepository {
     public boolean update(Task task) throws SQLException {
         String sql = """
                 UPDATE task
-                SET title = ?, description = ?, status = ?, id_user_workspace = ?, id_category = ?
+                    SET title = ?, description = ?, status = ?, id_user_workspace = ?, id_category = ?
                 WHERE id_task = ?
                 """;
         try (PreparedStatement ps = connection.prepareStatement(sql)) {

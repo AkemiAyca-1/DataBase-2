@@ -6,15 +6,45 @@ public abstract class User{
     private String mail;
     private String password;
 
-    public abstract void createCategory();
+    public User(String name, String mail, String password) {
+        this.name = name;
+        this.mail = mail;
+        this.password = password;
+    }
 
-    public abstract void createTask();
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public abstract void getTaskList();
+    public String getName() {
+        return name;
+    }
 
-    public abstract void getPendingTasks();
+    public String getMail() {
+        return mail;
+    }
 
-    public abstract void writeComment();
+    public String getPassword() {
+        return password;
+    }
 
-    public abstract void changeTaskStatus();
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("- Name: "+ name +"\n- Email: " + mail);
+    }
 }
