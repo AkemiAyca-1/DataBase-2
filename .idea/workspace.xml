@@ -5,23 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="327bb327-bf5f-4cbc-945a-cf9c67be1f79" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/controllers/AdminUserContoller.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/controllers/RegularUserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/controllers/RolController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/controllers/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/models/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/repository/RoleRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/repository/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/views/RoleView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/views/UserView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/Config/ConnectionSQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/Config/ConnectionSQL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/models/AdminUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/models/AdminUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/models/RegularUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/models/RegularUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/repository/TaskRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/repository/TaskRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/views/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/views/Menu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
