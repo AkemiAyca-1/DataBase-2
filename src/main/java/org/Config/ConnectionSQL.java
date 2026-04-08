@@ -14,7 +14,7 @@ public class ConnectionSQL {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3008/<Nombre BD>",
+                    "jdbc:mysql://localhost:3308/ToDoListEnglish",
                     "AycaUser",
                     "123456");
 
@@ -24,5 +24,9 @@ public class ConnectionSQL {
         } catch (ClassNotFoundException classNotFoundException) {
             System.err.println("Driver not found: " + classNotFoundException.getMessage());
         }
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 }
