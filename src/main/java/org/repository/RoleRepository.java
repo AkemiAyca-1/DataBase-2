@@ -16,15 +16,23 @@ public class RoleRepository {
         this.connection = connection;
     }
 
-    public Role saveRole(Role role) throws SQLException {
+    public Role saveRole(Role role) {
         String query = "insert into user_roles (name) values(?);";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, role.getName());
-        preparedStatement.executeUpdate();
-        try(ResultSet keys = preparedStatement.getGeneratedKeys()) {
-            if (keys.next()) role.setId(keys.getInt(1));
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, role.getName());
+            preparedStatement.executeUpdate();
+//            try(ResultSet keys = preparedStatement.getGeneratedKeys()) {
+//                if (keys.next()) {
+//                    role.setId(keys.getInt(1));
+//                    return role;
+//                }
+//            }
+            System.out.println("Role asignado correctamente");
+        }catch (SQLException e){
+            e.printStackTrace();
         }
-        return  role;
+        return null;
     }
 
     public boolean deleteRole(int id) throws SQLException {
@@ -51,23 +59,19 @@ public class RoleRepository {
         return roles;
     }
 
-    public boolean assignRole(int id_role, int id_user) throws SQLException {
+    public void assignRole(int id_role, int id_user) throws SQLException {
         String query = "insert into roles_and_users (id_role, id_user) values (?, ?); ";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, id_role);
         preparedStatement.setInt(2, id_user);
-        boolean resultSet = preparedStatement.execute();
-        if (resultSet) return true;
-        else return false;
+        preparedStatement.executeUpdate();
     }
 
-    public boolean updateRole(int id, String name) throws SQLException {
+    public void updateRole(int id, String name) throws SQLException {
         String query = "update user_roles set name = ? where id_role = ?;";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, name);
         preparedStatement.setInt(2, id);
-        boolean answere = preparedStatement.execute();
-        if (answere) return true;
-        else return false;
+        preparedStatement.executeUpdate();
     }
 }

@@ -4,21 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="327bb327-bf5f-4cbc-945a-cf9c67be1f79" name="Changes" comment="">
-<<<<<<< HEAD
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ValidateException/ValidationException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/controllers/TaskCommentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/models/TaskComment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/repository/TaskCommentRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/views/TaskCommentView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="29c053b0-b0e2-4bcf-9f9d-05dfdbdf9d52" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/controllers/AuthController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/Config/ConnectionSQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/Config/ConnectionSQL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/controllers/AdminUserContoller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/controllers/AdminUserContoller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/controllers/RolController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/controllers/RolController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/repository/RoleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/repository/RoleRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/repository/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/views/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/views/Menu.java" afterDir="false" />
-=======
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
->>>>>>> 7d6ff75debf241635538c45b6fcb7f7e4db48173
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/views/RoleView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/views/RoleView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/views/UserView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/views/UserView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,69 +29,27 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="main" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="McpProjectServerCommands">
-    <commands />
-    <urls />
-  </component>
-  <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 4
-}</component>
-  <component name="ProjectId" id="3BsgtXRBzPH0A68qt1SNJl0expS" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="3C6D2tWTEuvwe4JU7SMBc6R3iPG" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-<<<<<<< HEAD
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.App.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/AYCA/AYCA JALAU/002 SEGUNDO SEMESTRE/Modulo 2/LaboratoryPractitioner/BD2/Captone_v2/DataBase-2&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-=======
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.App.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "git-widget-placeholder": "feat/CRUD-Usuario",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/holmy/Documentos/Semestre_2/Modulo2/BasesDeDatos2/Capstone/DataBase-2",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
->>>>>>> 7d6ff75debf241635538c45b6fcb7f7e4db48173
+    "last_opened_file_path": "/home/holmy/Documentos/Semestre_2/Modulo2/BasesDeDatos2/DataBase-2"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.App" />
@@ -110,18 +64,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="DataBase-2" />
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
-<<<<<<< HEAD
     <recent_temporary>
       <list>
         <item itemvalue="Application.App" />
       </list>
     </recent_temporary>
-=======
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -129,20 +76,15 @@
         <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.28238.7" />
       </set>
     </attachedChunks>
->>>>>>> 7d6ff75debf241635538c45b6fcb7f7e4db48173
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="327bb327-bf5f-4cbc-945a-cf9c67be1f79" name="Changes" comment="" />
-      <created>1775283408235</created>
+      <changelist id="29c053b0-b0e2-4bcf-9f9d-05dfdbdf9d52" name="Changes" comment="" />
+      <created>1775696923810</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1775283408235</updated>
-      <workItem from="1775283414613" duration="2254000" />
+      <updated>1775696923810</updated>
     </task>
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
   </component>
 </project>
