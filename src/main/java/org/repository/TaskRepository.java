@@ -117,4 +117,21 @@ public class TaskRepository {
                 rs.getInt("id_category")
         );
     }
+
+
+    public int findUserWorkspaceId(int idUser, int idWorkspace) throws SQLException {
+        String sql = """
+            SELECT id_user_workspace
+            FROM user_workspace
+            WHERE id_user = ? AND id_workspace = ?
+            """;
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, idUser);
+            ps.setInt(2, idWorkspace);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt("id_user_workspace");
+            }
+        }
+        return -1;
+    }
 }

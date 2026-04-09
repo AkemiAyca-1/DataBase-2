@@ -36,7 +36,7 @@ public class Menu {
         RoleView roleView        = new RoleView(roleRepo);
 
         this.categoryController = new CategoryController(categoryRepo, categoryView);
-        this.taskController     = new TaskController(taskRepo, taskView);
+        this.taskController     = new TaskController(taskRepo, taskView, workspaceRepo);
         this.commentController = new TaskCommentController(taskCommentRepository, taskCommentView);
         this.workspaceController = new WorkspaceController(workspaceRepo, workspaceView);
         this.adminUserController = new AdminUserContoller(UserRespository,userView);

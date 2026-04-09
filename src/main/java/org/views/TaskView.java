@@ -45,9 +45,6 @@ public class TaskView {
 
         Status status = askStatus();
 
-        System.out.print("  ID del user_workspace: ");
-        int idUserWorkspace = readInt();
-
         System.out.print("  ID de la categoría: ");
         int idCategory = readInt();
 
@@ -55,9 +52,16 @@ public class TaskView {
         task.setTitle(title);
         task.setDescription(description);
         task.setStatus(status);
-        task.setIdUserWorkspace(idUserWorkspace);
         task.setIdCategory(idCategory);
         return task;
+    }
+
+    public int[] askWorkspaceMembership() {
+        System.out.print("  ID del usuario: ");
+        int idUser = readInt();
+        System.out.print("  ID del workspace: ");
+        int idWorkspace = readInt();
+        return new int[]{idUser, idWorkspace};
     }
 
     public boolean confirmDelete(int id) {

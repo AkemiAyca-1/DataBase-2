@@ -1,7 +1,9 @@
 package org.controllers;
 
+import org.Config.ConnectionSQL;
 import org.models.Task;
 import org.repository.TaskRepository;
+import org.repository.WorkspaceRepository;
 import org.views.TaskView;
 
 import java.sql.SQLException;
@@ -12,18 +14,31 @@ public class TaskController {
 
     private final TaskRepository repository;
     private final TaskView view;
+    private final WorkspaceRepository workspaceRepository;
 
-    public TaskController(TaskRepository repository, TaskView view) {
+    public TaskController(TaskRepository repository, TaskView view, WorkspaceRepository workspaceRepository) {
         this.repository = repository;
         this.view = view;
+        this.workspaceRepository = workspaceRepository;
     }
 
     public void create() {
         Task task = view.askTaskData();
         if (task == null) return;
+
         try {
+            int[] ids = view.askWorkspaceMembership();
+            int idUW = workspaceRepository.findUserWorkspaceId(ids[0], ids[1]);
+
+            if (idUW == -1) {
+                view.showError("El usuario no es miembro de ese workspace.");
+                return;
+            }
+
+            task.setIdUserWorkspace(idUW);
             Task saved = repository.save(task);
             view.showSuccess("Tarea creada: " + saved);
+
         } catch (SQLException e) {
             view.showError("Error al crear la tarea: " + e.getMessage());
         }
