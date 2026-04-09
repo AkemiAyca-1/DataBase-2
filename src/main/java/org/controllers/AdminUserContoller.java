@@ -5,6 +5,7 @@ import org.repository.*;
 import org.views.*;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class AdminUserContoller extends UserController {
     public AdminUserContoller(UserRepository repository, UserView view) {
@@ -60,12 +61,11 @@ public class AdminUserContoller extends UserController {
             System.out.println("El usuario no puede ser menor o igual a 0");
             return;
         }
-        view.showOneUse(id);
+        User userDB = repository.getUser(id);
         try {
-            boolean update = repository.update(id,view.askMail());
-            if (update){
-                view.showSuccess("Usuario actualizado correctamente");
-            }
+            String email = view.askMail();
+            repository.update(email,userDB.getId());
+            view.showSuccess("Usuario actualizado correctamente");
         }catch (Exception ex){
             view.showError("El usuario no existe");
         }
@@ -103,35 +103,10 @@ public class AdminUserContoller extends UserController {
             System.out.println("El usuario no puede ser menor o igual a 0");
         }
         try {
-            view.showOneUse(id);
+            User user = repository.getUser(id);
+            view.showOneUser(user);
         }catch (Exception ex){
             view.showError("El usuario no existe");
         }
     }
-
-    public static void createRole() {
-        System.out.println("-- Creating role --");
-
-    }
-
-    public void createWorkspace() {
-
-    }
-
-    public void deleteWorkspace() {
-
-    }
-
-    public void assignRole() {
-
-    }
-
-    public void updateRole() {
-
-    }
-
-    public void showReports() {
-
-    }
-
 }

@@ -18,12 +18,7 @@ public class RolController {
     public void createRole(){
         System.out.println("-- Creating role --");
         Role role = view.askDataRole();
-        try {
-            Role saved = repository.saveRole(role);
-            view.showSuccess("Rol "+ saved.getName() +" fue agregado correctamente");
-        }catch (Exception ex){
-            view.showError("Error al agregar rol ");
-        }
+        role = repository.saveRole(role);
     }
 
     public void assignRole(){
@@ -32,7 +27,7 @@ public class RolController {
             view.askRelationUserRol();
             view.showSuccess("Asignacion de Rol exitosa");
         }catch (Exception ex){
-            view.showError("Error al asiganar el rol ");
+            ex.printStackTrace();
         }
     }
 
@@ -60,15 +55,14 @@ public class RolController {
         System.out.println("-- Updating role --");
         int id = view.askId();
         String name = view.askName();
-        if (id != -1) {
+        if (id <= -1) {
             return;
         }
         try {
             repository.updateRole(id, name);
             view.showSuccess("Actualizado exitosamente");
         }catch (Exception ex){
-            view.showError("Error al actualizar rol ");
-        }
+            System.out.println("Error al actualizar rol");        }
     }
 
     public void updateRoleToUser(){

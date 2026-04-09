@@ -11,6 +11,10 @@ public class RoleView {
     RoleRepository roleRepository;
     Scanner scanner = new Scanner(System.in);
 
+    public RoleView(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
+
     public Role askDataRole(){
         System.out.println("Ingrese el nombre del nuevo Rol: ");
         String name = scanner.nextLine();
@@ -20,24 +24,23 @@ public class RoleView {
     }
 
     public int askId(){
-        System.out.println("Ingrese el id del rol a eliminar: ");
+        System.out.println("Ingrese el id del rol: ");
         int id = scanner.nextInt();
+        scanner.nextLine();
         return id;
     }
     public String askName(){
-        System.out.println("Ingrese el nombre del rol a eliminar: ");
+        System.out.println("Ingrese el nombre del rol: ");
         String name = scanner.nextLine();
         return name;
     }
 
-    public boolean askRelationUserRol() throws SQLException {
+    public void askRelationUserRol() throws SQLException {
         System.out.println("Ingrese el id del Usuario a asignar rol: ");
         int id_usuario = scanner.nextInt();
         System.out.println("Ingrese el id del rol a asignar: ");
         int id_rol = scanner.nextInt();
-        boolean answere = roleRepository.assignRole(id_rol,id_usuario);
-        if (answere) return true;
-        else return false;
+        roleRepository.assignRole(id_rol,id_usuario);
     }
 
     public void showAllRoles(List<Role> roles){

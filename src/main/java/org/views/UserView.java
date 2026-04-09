@@ -33,6 +33,7 @@ public class UserView {
     public int askId(){
         System.out.println("Ingresar Id: ");
         int id = scanner.nextInt();
+        scanner.nextLine();
         return id;
     }
 
@@ -64,6 +65,15 @@ public class UserView {
             System.out.printf("| %-2d | %-20s | %-20s |%n", user.getId(), user.getName(), user.getMail());
         }
         System.out.println("+----+----------------------+----------------------+");
+    }
+
+    public void showOneUser(User user){
+        System.out.println("+----+----------------------+----------------------+");
+        System.out.println("| ID | Name                 | Email                |");
+        System.out.println("+----+----------------------+----------------------+");
+        System.out.printf("| %-2d | %-20s | %-20s |%n", user.getId(), user.getName(), user.getMail());
+        System.out.println("+----+----------------------+----------------------+");
+
     }
 
 

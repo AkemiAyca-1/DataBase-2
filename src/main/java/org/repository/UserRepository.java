@@ -29,17 +29,15 @@ public class UserRepository {
         return user;
     }
 
-    public boolean update(int id_user, String newMail) throws SQLException {
+    public void update(String newMail, int id_user) throws SQLException {
         String query = "update user set email = ? where id_user = ?;";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, newMail);
         preparedStatement.setInt(2, id_user);
-        boolean answer = preparedStatement.execute();
-        if (answer) {
-            return true;
-        }
-        return false;
+        preparedStatement.executeUpdate();
+        connection.commit();
     }
+
 
     public boolean delete(int id_user) throws SQLException {
         String query = "delete from user where id_user = ?;";
@@ -85,7 +83,25 @@ public class UserRepository {
                 return new RegularUser(name, mail, password);
             }
         }catch (Exception e){
-            e.printStackTrace();
+            System.out.println("Usuario no encontrado");
+        }
+        return null;
+    }
+
+    public User getUserByName(String name){
+        String query = "select * from user where name = ?;";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String nameU = resultSet.getString("name");
+                String mail = resultSet.getString("email");
+                String password = resultSet.getString("password");
+                return new RegularUser(nameU, mail, password);
+            }
+        }catch (Exception e){
+            System.out.println("Usuario no encontrado");
         }
         return null;
     }

@@ -14,9 +14,9 @@ public class ConnectionSQL {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3308/ToDoListEnglish",
-                    "AycaUser",
-                    "123456");
+                    "jdbc:mysql://localhost:3306/ToDoListEnglish",
+                    "root",
+                    "Holman_222");
 
             System.out.println("Connection Successful!.");
         } catch (SQLException sqlException) {
