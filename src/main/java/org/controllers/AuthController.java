@@ -2,6 +2,7 @@ package org.controllers;
 
 import org.models.User;
 import org.repository.UserRepository;
+import org.utils.PasswordHasher;
 import org.views.UserView;
 
 public class AuthController {
@@ -13,14 +14,19 @@ public class AuthController {
 //        this.view = view;
     }
 
-    public boolean login(String username, String password) {
-        User userDB = respository.getUserByName(username);
+    public User login(String username, String password) {
+        String hashpassword = PasswordHasher.hashPassword(password);
+        User userDB = respository.getUserByName(username, hashpassword);
         if (userDB == null) {
-            System.out.println("Usuario no encontrado");
-        } else if (userDB.getPassword().equals(password)) {
-            return true;
+            return null;
+        } else if (userDB.getPassword().equals(hashpassword)) {
+            return userDB;
         }
-        return false;
+        return null;
+    }
+
+    public String authenticate(int id) {
+        return respository.getOneUserWithRole(id);
     }
 
 }
