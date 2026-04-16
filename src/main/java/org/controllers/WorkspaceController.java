@@ -44,6 +44,10 @@ public class WorkspaceController {
     public void addMember() {
         int wsID = view.askWorkspaceId();
         int userID = view.askUserId();
+        if (wsID <= 0 || userID <= 0) {
+            System.out.println("Error: IDs inválidos.");
+            return;
+        }
         try {
             if (repository.addMember(wsID, userID)) {
                 System.out.println("El usuario fue agregado al workspace");
@@ -58,6 +62,10 @@ public class WorkspaceController {
     public void deleteMember() {
         int wsID = view.askWorkspaceId();
         int userID = view.askUserId();
+        if (wsID <= 0 || userID <= 0) {
+            System.out.println("Error: IDs inválidos.");
+            return;
+        }
         try {
             if (repository.deleteMember(wsID, userID)) {
                 System.out.println("El usuario fue eliminado del workspace");
@@ -81,10 +89,15 @@ public class WorkspaceController {
 
     public void renameWorkspace(){
         int id = view.askWorkspaceId();
+        if (id <= 0) {
+            System.out.println("Error: ID de workspace inválido.");
+            return;
+        }
         String newName = view.askNewName();
 
         if(newName.isBlank()){
             System.out.println("error, el nombre no puede estar vacio");
+            return;
         }
         try {
 

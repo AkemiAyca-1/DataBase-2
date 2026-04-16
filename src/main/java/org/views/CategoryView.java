@@ -32,6 +32,10 @@ public class CategoryView {
         }
         System.out.print("  ID del usuario propietario: ");
         int idUser = readInt();
+        if (idUser <= 0) {
+            showError("ID de usuario inválido.");
+            return null;
+        }
         return new Category(name, idUser);
     }
 

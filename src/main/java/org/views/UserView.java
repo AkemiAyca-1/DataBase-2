@@ -17,16 +17,19 @@ public class UserView {
         String name = scanner.nextLine().trim();
         if (name.isBlank()){
             System.out.println("El nombre es obligatorio");
+            return null;
         }
         System.out.println("Ingresar Correo: ");
         String mail = scanner.nextLine().trim();
         if (mail.isBlank()){
             System.out.println("El mail es obligatorio");
+            return null;
         }
         System.out.println("Ingresar Contraseña: ");
         String password = scanner.nextLine().trim();
         if (password.isBlank()){
             System.out.println("La contraseña es obligatorio");
+            return null;
         }
         return new RegularUser(name, mail, password);
     }

@@ -48,9 +48,17 @@ public class TaskView {
 
         System.out.print("  ID del user_workspace: ");
         int idUserWorkspace = readInt();
+        if (idUserWorkspace <= 0) {
+            showError("ID de user_workspace inválido.");
+            return null;
+        }
 
         System.out.print("  ID de la categoría: ");
         int idCategory = readInt();
+        if (idCategory <= 0) {
+            showError("ID de categoría inválido.");
+            return null;
+        }
 
         Task task = new Task();
         task.setTitle(title);
