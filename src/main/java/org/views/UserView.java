@@ -4,6 +4,7 @@ import org.models.User;
 import org.repository.UserRepository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class UserView {
@@ -50,12 +51,6 @@ public class UserView {
         System.out.println(message);
     }
 
-    public void showOneUse(int id){
-        User user = repository.getUser(id);
-        System.out.println("Usuario: " + user.getName());
-        System.out.println("Correo: " + user.getMail());
-    }
-
     public void showAllUsers(List<User> users){
         System.out.println("+----+----------------------+----------------------+");
         System.out.println("| ID | Name                 | Email                |");
@@ -73,6 +68,21 @@ public class UserView {
         System.out.println("+----+----------------------+----------------------+");
         System.out.printf("| %-2d | %-20s | %-20s |%n", user.getId(), user.getName(), user.getMail());
         System.out.println("+----+----------------------+----------------------+");
+
+    }
+
+    public void showUserWithRol(List<Map<String, String>> data) {
+        System.out.println("+--------------------+------------------------------+----------------+");
+        System.out.printf("| %-20s | %-25s | %-15s |\n", "NOMBRE", "EMAIL", "ROL");
+        System.out.println("+--------------------+------------------------------+----------------+");
+
+        for (Map<String, String> reg : data) {
+            System.out.printf("| %-20s | %-25s | %-15s |\n",
+                    reg.get("nombre"),
+                    reg.get("email"),
+                    reg.get("rol"));
+        }
+        System.out.println("+--------------------+------------------------------+----------------+");
 
     }
 

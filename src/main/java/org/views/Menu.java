@@ -1,5 +1,6 @@
 package org.views;
 
+import org.models.User;
 import org.repository.*;
 import org.controllers.*;
 
@@ -7,6 +8,7 @@ import java.sql.Connection;
 import java.util.Scanner;
 
 public class Menu {
+    private User userLogin;
     private final Scanner scanner = new Scanner(System.in);
 
     private final CategoryController categoryController;
@@ -43,25 +45,52 @@ public class Menu {
         this.rolController        = new RolController(roleRepo, roleView);
         this.authController = new AuthController(UserRespository);
     }
+
     public void start() {
         boolean login = false;
-        while (login == false) {
-            if (handleAuthentication()) {
-                administratorMenu();
-                login = true;
-            }else  {
-                System.out.println("Usuario o Contraseña NO validas");
+        while (!login) {
+            System.out.println("Ingrese opcion 1 si desea registrarse como usuario nuevo");
+            System.out.println("Ingrese opcion 2 si ya tiene una cuenta registrada");
+            int opcion = scanner.nextInt();
+            scanner.nextLine();
+            switch (opcion) {
+                case 1 -> adminUserController.createUser();
+                case 2 -> {
+                    int contador = 1;
+                    while (login == false && contador <= 3) {
+                        userLogin = handleAuthentication();
+                        if (userLogin != null) {
+//                            int idUser = userLogin.getId();
+//                            String role = authController.authenticate(idUser);
+//                            if (role.equalsIgnoreCase("Admin")) {
+//                                administratorMenu();
+//                                login = true;
+//                            } else{
+//                                generalMenu();
+//                            }
+                            administratorMenu();
+                            login = true;
+                        } else {
+                            System.out.println("Usuario o Contraseña NO validas");
+                            contador++;
+                        }
+                    }
+                }
+                case 0 -> {
+                    return;
+                }
+                default -> System.out.println("Opcion no valida");
             }
         }
     }
 
-    private boolean handleAuthentication() {
+    private User handleAuthentication() {
         System.out.println("--- Login / Signup ---");
         System.out.print("Username: ");
         String username = scanner.nextLine();
         System.out.print("Password: ");
-        String password = scanner.nextLine();
-        return authController.login(username, password) ;
+        String password = scanner.nextLine().trim();
+        return authController.login(username, password);
     }
 
     private void administratorMenu() {
@@ -229,7 +258,7 @@ public class Menu {
         while (true) {
             System.out.println("          GESTIÓN DE USUARIOS");
             System.out.println("  1. Crear");
-            System.out.println("  2. Actualizar Correo");
+            System.out.println("  2. Actualizar Usuario");
             System.out.println("  3. Eliminar");
             System.out.println("  4. Listar todos los usuarios");
             System.out.println("  5. Buscar por ID");
@@ -238,14 +267,14 @@ public class Menu {
             System.out.println("  8. Eliminar Rol");
             System.out.println("  9. Asignar Rol");
             System.out.println("  10. Listar todos los roles existentes");
-//            System.out.println("  11. Actualizar Rol a Usuario");
+            System.out.println("  11. Listar todos los usuarios y sus roles asociados");
             System.out.println("  0. Volver");
             int option = scanner.nextInt();
 
             switch (option) {
                 case 0 -> {return;}
                 case 1 -> adminUserController.createUser();
-                case 2 -> adminUserController.updateMailUser();
+                case 2 -> adminUserController.updateUser();
                 case 3 -> adminUserController.deleteUser();
                 case 4 -> adminUserController.findAllUsers();
                 case 5 -> adminUserController.findOneUser();
@@ -254,6 +283,7 @@ public class Menu {
                 case 8 -> rolController.deleteRole();
                 case 9 -> rolController.assignRole();
                 case 10 -> rolController.findRole();
+                case 11 -> adminUserController.findUserWithRol();
             }
         }
     }
