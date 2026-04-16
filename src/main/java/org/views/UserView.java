@@ -33,9 +33,8 @@ public class UserView {
 
     public int askId(){
         System.out.println("Ingresar Id: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
-        return id;
+        try { return Integer.parseInt(scanner.nextLine().trim()); }
+        catch (NumberFormatException e) { return -1; }
     }
 
     public String askMail(){

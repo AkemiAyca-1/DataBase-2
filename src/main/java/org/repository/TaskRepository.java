@@ -2,6 +2,7 @@ package org.repository;
 
 import org.models.Task;
 import org.enums.Status;
+import org.models.TaskDashboardRow;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -116,5 +117,24 @@ public class TaskRepository {
                 rs.getInt("id_user_workspace"),
                 rs.getInt("id_category")
         );
+    }
+
+    public List<TaskDashboardRow> getDashboard() throws SQLException {
+        String sql = "SELECT * FROM task_dashboard";
+        List<TaskDashboardRow> list = new ArrayList<>();
+
+        try (PreparedStatement ps = connection.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                list.add(new TaskDashboardRow(
+                        rs.getString("title"),
+                        rs.getDate("created_at"),
+                        rs.getString("category_name"),
+                        rs.getString("user_name")
+                ));
+            }
+        }
+        return list;
     }
 }

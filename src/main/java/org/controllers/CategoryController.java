@@ -2,6 +2,7 @@ package org.controllers;
 
 import org.models.Category;
 import org.repository.CategoryRepository;
+import org.repository.UserRepository;
 import org.views.CategoryView;
 
 import java.sql.SQLException;
@@ -11,10 +12,12 @@ import java.util.Optional;
 public class CategoryController {
 
     private final CategoryRepository repository;
+    private final UserRepository  userRepository;
     private final CategoryView view;
 
-    public CategoryController(CategoryRepository repository, CategoryView view) {
+    public CategoryController(CategoryRepository repository, UserRepository userRepository, CategoryView view) {
         this.repository = repository;
+        this.userRepository = userRepository;
         this.view = view;
     }
 
@@ -23,6 +26,10 @@ public class CategoryController {
         if (category == null) return;
         if (category.getName().isBlank()) {
             view.showError("El nombre no puede estar vacío.");
+            return;
+        }
+        if (userRepository.getUser(category.getIdUser()) == null) {
+            view.showError("No existe un usuario con id " + category.getIdUser());
             return;
         }
         try {

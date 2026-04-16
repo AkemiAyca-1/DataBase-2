@@ -25,9 +25,8 @@ public class RoleView {
 
     public int askId(){
         System.out.println("Ingrese el id del rol: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
-        return id;
+        try { return Integer.parseInt(scanner.nextLine().trim()); }
+        catch (NumberFormatException e) { return -1; }
     }
     public String askName(){
         System.out.println("Ingrese el nombre del rol: ");

@@ -48,7 +48,11 @@ public class RolController {
             boolean delete = repository.deleteRole(id);
             view.showSuccess("Rol con id -"+ id +"- fue eliminado correctamente");
         }catch (Exception ex){
-            view.showError("Error al eliminar rol ");
+            if (ex.getMessage() != null && ex.getMessage().contains("foreign key constraint")) {
+                view.showError("El rol está asignado a usuarios. Desasígnalo primero.");
+            } else {
+                view.showError("Error al eliminar rol");
+            }
         }
     }
     public void updateRole(){

@@ -16,7 +16,7 @@ public class ConnectionSQL {
             connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/ToDoListEnglish",
                     "root",
-                    "Holman_222");
+                    "Hola123!");
 
             System.out.println("Connection Successful!.");
         } catch (SQLException sqlException) {

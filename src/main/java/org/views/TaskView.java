@@ -2,6 +2,7 @@ package org.views;
 
 import org.models.Task;
 import org.enums.Status;
+import org.models.TaskDashboardRow;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -118,5 +119,22 @@ public class TaskView {
     private String truncate(String s, int max) {
         if (s == null) return "";
         return s.length() <= max ? s : s.substring(0, max - 1) + "…";
+    }
+
+    public void showDashboard(List<TaskDashboardRow> rows) {
+        if (rows.isEmpty()) { System.out.println("  (Sin tareas)"); return; }
+        System.out.println("\n  TASK DASHBOARD");
+        System.out.printf("  %-22s %-12s %-20s %-15s%n",
+                "Título", "Creada", "Categoría", "Usuario");
+        System.out.println("  " + "─".repeat(72));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        for (TaskDashboardRow r : rows) {
+            System.out.printf("  %-22s %-12s %-20s %-15s%n",
+                    truncate(r.getTitle(), 20),
+                    r.getCreatedAt() != null ? sdf.format(r.getCreatedAt()) : "N/A",
+                    r.getCategoryName(),
+                    r.getUserName());
+        }
+        System.out.println("  " + "─".repeat(72));
     }
 }

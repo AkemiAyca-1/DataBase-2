@@ -1,6 +1,7 @@
 package org.controllers;
 
 import org.models.Task;
+import org.models.TaskDashboardRow;
 import org.repository.TaskRepository;
 import org.views.TaskView;
 
@@ -96,6 +97,15 @@ public class TaskController {
             view.showAll(tasks);
         } catch (SQLException e) {
             view.showError("Error al filtrar por workspace: " + e.getMessage());
+        }
+    }
+
+    public void showDashboard() {
+        try {
+            List<TaskDashboardRow> rows = repository.getDashboard();
+            view.showDashboard(rows);
+        } catch (SQLException e) {
+            view.showError("Error al cargar el dashboard: " + e.getMessage());
         }
     }
 }

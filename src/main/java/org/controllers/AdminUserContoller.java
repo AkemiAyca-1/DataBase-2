@@ -95,7 +95,11 @@ public class AdminUserContoller extends UserController {
                 view.showSuccess("Usuario eliminado correctamente");
             }
         }catch (Exception ex){
-            view.showError("El usuario no existe");
+            if (ex.getMessage().contains("foreign key constraint")) {
+                view.showError("No se puede eliminar: el usuario tiene datos asociados.");
+            } else {
+                view.showError("Error al eliminar: " + ex.getMessage());
+            }
         }
     }
 

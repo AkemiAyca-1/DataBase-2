@@ -3,6 +3,7 @@ package org.repository;
 import org.models.RegularUser;
 import org.models.User;
 import org.models.Workspace;
+import org.models.WorkspaceSummary;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -88,5 +89,25 @@ public class WorkspaceRepository {
             }
         }
         return users;
+    }
+    public List<WorkspaceSummary> getSummary() throws SQLException {
+        String sql = "SELECT * FROM workspace_summary";
+        List<WorkspaceSummary> list = new ArrayList<>();
+
+        try (PreparedStatement ps = connection.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                list.add(new WorkspaceSummary(
+                        rs.getString("workspace_name"),
+                        rs.getInt("total_tasks"),
+                        rs.getInt("pending"),
+                        rs.getInt("in_progress"),
+                        rs.getInt("completed"),
+                        rs.getInt("cancelled")
+                ));
+            }
+        }
+        return list;
     }
 }

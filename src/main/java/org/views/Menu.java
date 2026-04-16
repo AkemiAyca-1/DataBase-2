@@ -27,7 +27,7 @@ public class Menu {
         TaskRepository taskRepo         = new TaskRepository(connectionSQL);
         TaskCommentRepository taskCommentRepository = new TaskCommentRepository(connectionSQL);
         WorkspaceRepository workspaceRepo = new WorkspaceRepository(connectionSQL);
-        UserRepository UserRespository = new UserRepository(connectionSQL);
+        UserRepository userRepository = new UserRepository(connectionSQL);
         RoleRepository roleRepo        = new RoleRepository(connectionSQL);
 
         CategoryView categoryView = new CategoryView(scanner);
@@ -37,13 +37,13 @@ public class Menu {
         UserView userView = new UserView();
         RoleView roleView        = new RoleView(roleRepo);
 
-        this.categoryController = new CategoryController(categoryRepo, categoryView);
+        this.categoryController = new CategoryController(categoryRepo, userRepository, categoryView);
         this.taskController     = new TaskController(taskRepo, taskView);
         this.commentController = new TaskCommentController(taskCommentRepository, taskCommentView);
         this.workspaceController = new WorkspaceController(workspaceRepo, workspaceView);
-        this.adminUserController = new AdminUserContoller(UserRespository,userView);
+        this.adminUserController = new AdminUserContoller(userRepository,userView);
         this.rolController        = new RolController(roleRepo, roleView);
-        this.authController = new AuthController(UserRespository);
+        this.authController = new AuthController(userRepository);
     }
 
     public void start() {
@@ -177,7 +177,7 @@ public class Menu {
             System.out.println("0. Back");
             System.out.print("Select an option: ");
 
-            int choice = Integer.parseInt(scanner.nextLine());
+            int choice = readInt();
 
             if (choice == 0) break;
 
@@ -200,11 +200,7 @@ public class Menu {
             System.out.println("  5. Listar todas");
             System.out.println("  6. Listar por categoría");
             System.out.println("  7. Listar por user_workspace");
-//            // ------------------------
-//            System.out.println("8. Crear comentario");
-//            System.out.println("9. Ver comentarios por tarea");
-//            System.out.println("10. Eliminar comentario");
-//            // ------------------------
+            System.out.println("  8. Dashboard de tareas");
             System.out.println("  0. Volver");
             System.out.print("  Opción: ");
 
@@ -217,9 +213,7 @@ public class Menu {
                 case "5" -> taskController.listAll();
                 case "6" -> taskController.listByCategory();
                 case "7" -> taskController.listByUserWorkspace();
-//                case "8" -> commentController.create();
-//                case "9" -> commentController.listByTask();
-//                case "10" -> commentController.delete();
+                case "8" -> taskController.showDashboard();
                 case "0" -> { return; }
                 default  -> System.out.println("  Opción inválida.");
             }
@@ -236,6 +230,7 @@ public class Menu {
             System.out.println("5.Agregar un usuario");
             System.out.println("6.Eliminar miembro");
             System.out.println("7.Listar miembros");
+            System.out.println("8.Resumen de workspaces");
             System.out.println("0.Volver");
             System.out.print("Opción: ");
 
@@ -248,6 +243,7 @@ public class Menu {
                 case "5" -> workspaceController.addMember();
                 case "6" -> workspaceController.deleteMember();
                 case "7" -> workspaceController.listMembers();
+                case "8" -> workspaceController.showSummary();
                 case "0" -> { return; }
                 default  -> System.out.println("Opción inválida.");
             }
@@ -269,7 +265,7 @@ public class Menu {
             System.out.println("  10. Listar todos los roles existentes");
             System.out.println("  11. Listar todos los usuarios y sus roles asociados");
             System.out.println("  0. Volver");
-            int option = scanner.nextInt();
+            int option = readInt();
 
             switch (option) {
                 case 0 -> {return;}

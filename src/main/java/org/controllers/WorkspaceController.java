@@ -2,6 +2,7 @@ package org.controllers;
 
 import org.models.User;
 import org.models.Workspace;
+import org.models.WorkspaceSummary;
 import org.repository.WorkspaceRepository;
 import org.views.WorkspaceView;
 
@@ -110,4 +111,12 @@ public class WorkspaceController {
         }
     }
 
+    public void showSummary() {
+        try {
+            List<WorkspaceSummary> summary = repository.getSummary();
+            view.showSummary(summary);
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el resumen: " + e.getMessage());
+        }
+    }
 }
