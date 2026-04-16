@@ -17,6 +17,7 @@ public class WorkspaceController {
 
     public WorkspaceController(WorkspaceRepository workspaceRepository, UserRepository userRepository, WorkspaceView view) {
         this.workspaceRepository = workspaceRepository;
+        this.userRepository = userRepository;
         this.view = view;
     }
 

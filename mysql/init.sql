@@ -1,68 +1,76 @@
-create database ToDoListEnglish;
+drop database if exists ToDoListEnglish;
+create database if not exists ToDoListEnglish;
 use ToDoListEnglish;
--- drop database ToDoListEnglish;
 
-create table user (
-                      id_user int not null auto_increment primary key,
-                      name varchar(140),
-                      password varchar(140),
-                      email varchar(80)
+create table user
+(
+    id_user  int not null auto_increment primary key,
+    name     varchar(140),
+    password varchar(140),
+    email    varchar(80)
 );
 
-create table user_roles (
-                            id_role int auto_increment not null primary key,
-                            name varchar(50)
+create table user_roles
+(
+    id_role int auto_increment not null primary key,
+    name    varchar(50)
 );
 
-create table roles_and_users (
-                                 id_roles_and_users int auto_increment primary key,
-                                 id_role int not null,
-                                 id_user int not null,
-                                 foreign key (id_role) references user_roles(id_role),
-                                 foreign key (id_user) references user(id_user)
+create table roles_and_users
+(
+    id_roles_and_users int auto_increment primary key,
+    id_role            int not null,
+    id_user            int not null,
+    foreign key (id_role) references user_roles (id_role),
+    foreign key (id_user) references user (id_user)
 );
 
-create table category (
-                          id_category int auto_increment not null primary key,
-                          name varchar(50),
-                          id_user int not null,
-                          foreign key (id_user) references user(id_user)
+create table category
+(
+    id_category int auto_increment not null primary key,
+    name        varchar(50),
+    id_user     int                not null,
+    foreign key (id_user) references user (id_user)
 );
 
-create table workspace (
-                           id_workspace int auto_increment not null primary key,
-                           name varchar(100)
+create table workspace
+(
+    id_workspace int auto_increment not null primary key,
+    name         varchar(100)
 );
 
-create table user_workspace (
-                                id_user_workspace int auto_increment not null primary key,
-                                id_user int not null,
-                                id_workspace int not null,
-                                foreign key (id_user) references user(id_user),
-                                foreign key (id_workspace) references workspace(id_workspace)
+create table user_workspace
+(
+    id_user_workspace int auto_increment not null primary key,
+    id_user           int                not null,
+    id_workspace      int                not null,
+    foreign key (id_user) references user (id_user),
+    foreign key (id_workspace) references workspace (id_workspace)
 );
 
-create table task (
-                      id_task int auto_increment not null primary key,
-                      title varchar(200),
-                      description text,
-                      created_at date,
-                      status enum ('Pending', 'In Progress', 'Completed', 'Cancelled') default 'Pending',
-                      id_user_workspace int not null,
-                      id_category int not null,
-                      foreign key (id_user_workspace) references user_workspace(id_user_workspace),
-                      foreign key (id_category) references category(id_category)
+create table task
+(
+    id_task           int auto_increment not null primary key,
+    title             varchar(200),
+    description       text,
+    created_at        date,
+    status            enum ('Pending', 'In Progress', 'Completed', 'Cancelled') default 'Pending',
+    id_user_workspace int                not null,
+    id_category       int                not null,
+    foreign key (id_user_workspace) references user_workspace (id_user_workspace),
+    foreign key (id_category) references category (id_category)
 );
 
-create table task_comment (
-                              id_comment int auto_increment not null primary key,
-                              title varchar(100),
-                              comment text,
-                              comment_date date,
-                              id_task int not null,
-                              id_user_workspace int not null,
-                              foreign key (id_task) references task(id_task),
-                              foreign key (id_user_workspace) references user_workspace(id_user_workspace)
+create table task_comment
+(
+    id_comment        int auto_increment not null primary key,
+    title             varchar(100),
+    comment           text,
+    comment_date      date,
+    id_task           int                not null,
+    id_user_workspace int                not null,
+    foreign key (id_task) references task (id_task),
+    foreign key (id_user_workspace) references user_workspace (id_user_workspace)
 );
 
 create view task_dashboard
@@ -81,33 +89,35 @@ from task t
          join user u on u.id_user = uw.id_user;
 
 create view workspace_summary as
-select
-    w.name as workspace_name,
-    count(t.id_task) as total_tasks,
-    sum(t.status = 'Pending') as pending,
-    sum(t.status = 'In Progress') as in_progress,
-    sum(t.status = 'Completed') as completed,
-    sum(t.status = 'Cancelled') as cancelled
+select w.name                        as workspace_name,
+       count(t.id_task)              as total_tasks,
+       sum(t.status = 'Pending')     as pending,
+       sum(t.status = 'In Progress') as in_progress,
+       sum(t.status = 'Completed')   as completed,
+       sum(t.status = 'Cancelled')   as cancelled
 from workspace w
          left join user_workspace uw on uw.id_workspace = w.id_workspace
          left join task t on t.id_user_workspace = uw.id_user_workspace
 group by w.id_workspace, w.name;
 
 delimiter $$
-create procedure get_pending_tasks (in workspace_name varchar(150))
+create procedure get_pending_tasks(in workspace_name varchar(150))
 begin
     select u.name as user_name, count(t.id_task) as task_count
     from task t
              join user_workspace uw on uw.id_user_workspace = t.id_user_workspace
              join user u on u.id_user = uw.id_user
              join workspace w on w.id_workspace = uw.id_workspace
-    where t.status != 'Completed' and w.name = workspace_name
+    where t.status != 'Completed'
+      and w.name = workspace_name
     group by u.name;
 end $$
 delimiter ;
 
+delimiter $$
 create trigger before_task_insert
-    before insert on task
+    before insert
+    on task
     for each row
 begin
     if new.title is null or trim(new.title) = '' then
@@ -118,11 +128,17 @@ begin
     if new.created_at is null then
         set new.created_at = curdate();
     end if;
-end;
+end $$
+delimiter ;
 
-create index idx_user_name on user(name);
-create index idx_task_title on task(title);
+create index idx_user_name on user (name);
+create index idx_task_title on task (title);
 
-SELECT * FROM category;
-SELECT * FROM workspace;
-SELECT * FROM task;
+SELECT *
+FROM category;
+SELECT *
+FROM workspace;
+SELECT *
+FROM task;
+
+SELECT * from ToDoListEnglish.task_dashboard;
