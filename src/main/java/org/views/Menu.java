@@ -23,27 +23,27 @@ public class Menu {
     private final AuthController authController;
 
     public Menu(Connection connectionSQL) {
-        CategoryRepository categoryRepo = new CategoryRepository(connectionSQL);
-        TaskRepository taskRepo         = new TaskRepository(connectionSQL);
-        TaskCommentRepository taskCommentRepository = new TaskCommentRepository(connectionSQL);
-        WorkspaceRepository workspaceRepo = new WorkspaceRepository(connectionSQL);
-        UserRepository userRepository = new UserRepository(connectionSQL);
-        RoleRepository roleRepo        = new RoleRepository(connectionSQL);
+        CategoryRepository    categoryRepo   = new CategoryRepository(connectionSQL);
+        TaskRepository        taskRepo       = new TaskRepository(connectionSQL);
+        TaskCommentRepository commentRepo    = new TaskCommentRepository(connectionSQL);
+        WorkspaceRepository   workspaceRepo  = new WorkspaceRepository(connectionSQL);
+        UserRepository        userRepository = new UserRepository(connectionSQL);
+        RoleRepository        roleRepo       = new RoleRepository(connectionSQL);
 
-        CategoryView categoryView = new CategoryView(scanner);
-        TaskView taskView         = new TaskView(scanner);
+        CategoryView    categoryView    = new CategoryView(scanner);
+        TaskView        taskView        = new TaskView(scanner);
         TaskCommentView taskCommentView = new TaskCommentView(scanner);
-        WorkspaceView workspaceView = new WorkspaceView(scanner);
-        UserView userView = new UserView();
-        RoleView roleView        = new RoleView(roleRepo);
+        WorkspaceView   workspaceView   = new WorkspaceView(scanner);
+        UserView        userView        = new UserView();
+        RoleView        roleView        = new RoleView(roleRepo);
 
-        this.categoryController = new CategoryController(categoryRepo, userRepository, categoryView);
-        this.taskController     = new TaskController(taskRepo, taskView);
-        this.commentController = new TaskCommentController(taskCommentRepository, taskCommentView);
-        this.workspaceController = new WorkspaceController(workspaceRepo, workspaceView);
-        this.adminUserController = new AdminUserContoller(userRepository,userView);
-        this.rolController        = new RolController(roleRepo, roleView);
-        this.authController = new AuthController(userRepository);
+        this.categoryController  = new CategoryController(categoryRepo, userRepository, categoryView);
+        this.taskController      = new TaskController(taskRepo, workspaceRepo, categoryRepo, taskView);
+        this.commentController   = new TaskCommentController(commentRepo, taskRepo, workspaceRepo, taskCommentView);
+        this.workspaceController = new WorkspaceController(workspaceRepo, userRepository, workspaceView);
+        this.adminUserController = new AdminUserContoller(userRepository, userView);
+        this.rolController       = new RolController(roleRepo, roleView);
+        this.authController      = new AuthController(userRepository);
     }
 
     public void start() {
@@ -57,17 +57,9 @@ public class Menu {
                 case 1 -> adminUserController.createUser();
                 case 2 -> {
                     int contador = 1;
-                    while (login == false && contador <= 3) {
+                    while ( !login && contador <= 3) {
                         userLogin = handleAuthentication();
                         if (userLogin != null) {
-//                            int idUser = userLogin.getId();
-//                            String role = authController.authenticate(idUser);
-//                            if (role.equalsIgnoreCase("Admin")) {
-//                                administratorMenu();
-//                                login = true;
-//                            } else{
-//                                generalMenu();
-//                            }
                             administratorMenu();
                             login = true;
                         } else {

@@ -27,7 +27,12 @@ public class RolController {
             view.askRelationUserRol();
             view.showSuccess("Asignacion de Rol exitosa");
         }catch (Exception ex){
-            ex.printStackTrace();
+            String msg = ex.getMessage();
+            if (msg != null && msg.contains("foreign key constraint")) {
+                view.showError("El usuario o el rol especificado no existe. Verifica los IDs e inténtalo de nuevo.");
+            } else {
+                view.showError("Error al asignar el rol: " + msg);
+            }
         }
     }
 

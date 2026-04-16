@@ -110,4 +110,24 @@ public class WorkspaceRepository {
         }
         return list;
     }
+
+    public boolean existsUserWorkspace(int id) throws SQLException {
+        String sql = "SELECT 1 FROM user_workspace WHERE id_user_workspace = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
+    public boolean existsWorkspace(int id) throws SQLException {
+        String sql = "SELECT 1 FROM workspace WHERE id_workspace = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
 }

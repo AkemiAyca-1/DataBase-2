@@ -12,7 +12,7 @@ import java.util.Optional;
 public class CategoryController {
 
     private final CategoryRepository repository;
-    private final UserRepository  userRepository;
+    private final UserRepository userRepository;
     private final CategoryView view;
 
     public CategoryController(CategoryRepository repository, UserRepository userRepository, CategoryView view) {
@@ -45,7 +45,7 @@ public class CategoryController {
         try {
             Optional<Category> result = repository.findById(id);
             if (result.isPresent()) view.showCategory(result.get());
-            else                    view.showError("No existe una categoría con id " + id);
+            else view.showError("No existe una categoría con id " + id);
         } catch (SQLException e) {
             view.showError("Error al buscar: " + e.getMessage());
         }
@@ -62,9 +62,13 @@ public class CategoryController {
             view.showCategory(existing.get());
             Category updated = view.askCategoryData();
             if (updated == null) return;
+            if (userRepository.getUser(updated.getIdUser()) == null) {
+                view.showError("No existe un usuario con id " + updated.getIdUser());
+                return;
+            }
             updated.setIdCategory(id);
             if (repository.update(updated)) view.showSuccess("Categoría actualizada: " + updated);
-            else                            view.showError("No se pudo actualizar.");
+            else view.showError("No se pudo actualizar.");
         } catch (SQLException e) {
             view.showError("Error al actualizar: " + e.getMessage());
         }
@@ -72,12 +76,19 @@ public class CategoryController {
 
     public void delete() {
         int id = view.askId();
-        if (!view.confirmDelete(id)) { view.showMessage("Cancelado."); return; }
+        if (!view.confirmDelete(id)) {
+            view.showMessage("Cancelado.");
+            return;
+        }
         try {
             if (repository.delete(id)) view.showSuccess("Categoría " + id + " eliminada.");
-            else                       view.showError("No existe una categoría con id " + id);
+            else view.showError("No existe una categoría con id " + id);
         } catch (SQLException e) {
-            view.showError("Error al eliminar: " + e.getMessage());
+            if (e.getMessage() != null && e.getMessage().contains("foreign key constraint")) {
+                view.showError("No se puede eliminar: la categoría tiene tareas asociadas. Elimínalas primero.");
+            } else {
+                view.showError("Error al eliminar: " + e.getMessage());
+            }
         }
     }
 

@@ -3,6 +3,7 @@ package org.controllers;
 import org.models.User;
 import org.models.Workspace;
 import org.models.WorkspaceSummary;
+import org.repository.UserRepository;
 import org.repository.WorkspaceRepository;
 import org.views.WorkspaceView;
 
@@ -10,31 +11,32 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class WorkspaceController {
-    protected WorkspaceRepository repository;
+    protected WorkspaceRepository workspaceRepository;
+    protected UserRepository userRepository;
     protected WorkspaceView view;
 
-    public WorkspaceController(WorkspaceRepository repository, WorkspaceView view){
-        this.repository = repository;
+    public WorkspaceController(WorkspaceRepository workspaceRepository, UserRepository userRepository, WorkspaceView view) {
+        this.workspaceRepository = workspaceRepository;
         this.view = view;
     }
 
-    public void create(){
-       String name = view.askName();
-       if(name.isBlank()){
-           System.out.println("error, nombre no ingresado");
-           return;
-       }
-       try {
-           Workspace saved = repository.saveWorkspace(new Workspace(name));
-           System.out.println("Workspace creado con exito " + saved.getId() + " " + saved.getName());
-       } catch (SQLException e) {
-           System.out.println("error al crear el workspace: " + e.getMessage());
-       }
+    public void create() {
+        String name = view.askName();
+        if (name.isBlank()) {
+            System.out.println("error, nombre no ingresado");
+            return;
+        }
+        try {
+            Workspace saved = workspaceRepository.saveWorkspace(new Workspace(name));
+            System.out.println("Workspace creado con exito " + saved.getId() + " " + saved.getName());
+        } catch (SQLException e) {
+            System.out.println("error al crear el workspace: " + e.getMessage());
+        }
     }
 
     public void listAll() {
         try {
-            List<Workspace> workspaces = repository.findAll();
+            List<Workspace> workspaces = workspaceRepository.findAll();
             view.showAllWorkspaces(workspaces);
         } catch (SQLException e) {
             System.out.println("error al listar los workspaces: " + e.getMessage());
@@ -49,13 +51,21 @@ public class WorkspaceController {
             return;
         }
         try {
-            if (repository.addMember(wsID, userID)) {
-                System.out.println("El usuario fue agregado al workspace");
+            if (!workspaceRepository.existsWorkspace(wsID)) {
+                System.out.println("Error: no existe un workspace con id " + wsID);
+                return;
+            }
+            if (userRepository.getUser(userID) == null) {
+                System.out.println("Error: no existe un usuario con id " + userID);
+                return;
+            }
+            if (workspaceRepository.addMember(wsID, userID)) {
+                System.out.println("El usuario fue agregado al workspace.");
             } else {
-                System.out.println("Error al agregar el usuario al workspace");
+                System.out.println("Error al agregar el usuario al workspace.");
             }
         } catch (SQLException e) {
-            System.out.println("error: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
@@ -67,7 +77,7 @@ public class WorkspaceController {
             return;
         }
         try {
-            if (repository.deleteMember(wsID, userID)) {
+            if (workspaceRepository.deleteMember(wsID, userID)) {
                 System.out.println("El usuario fue eliminado del workspace");
             } else {
                 System.out.println("error al eliminar usuario del workspace");
@@ -80,14 +90,14 @@ public class WorkspaceController {
     public void listMembers() {
         int wsID = view.askWorkspaceId();
         try {
-            List<User> members = repository.findMembersByWorkspace(wsID);
+            List<User> members = workspaceRepository.findMembersByWorkspace(wsID);
             view.showAllMembers(members);
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 
-    public void renameWorkspace(){
+    public void renameWorkspace() {
         int id = view.askWorkspaceId();
         if (id <= 0) {
             System.out.println("Error: ID de workspace inválido.");
@@ -95,18 +105,18 @@ public class WorkspaceController {
         }
         String newName = view.askNewName();
 
-        if(newName.isBlank()){
+        if (newName.isBlank()) {
             System.out.println("error, el nombre no puede estar vacio");
             return;
         }
         try {
 
-            if (repository.updateName(id, newName)) {
+            if (workspaceRepository.updateName(id, newName)) {
                 System.out.println("Workspace renombrado correctamente a: " + newName);
             } else {
                 System.out.println("error no se encontró un workspace con el Id " + id);
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -114,19 +124,23 @@ public class WorkspaceController {
     public void delete() {
         int id = view.askWorkspaceId();
         try {
-            if (repository.delete(id)) {
+            if (workspaceRepository.delete(id)) {
                 System.out.println("Workspace eliminado correctamente");
             } else {
                 System.out.println("No se encontro el workspace con ID " + id);
             }
         } catch (SQLException e) {
-            System.out.println("Error al eliminar workpace:" + e.getMessage());
+            if (e.getMessage() != null && e.getMessage().contains("foreign key constraint")) {
+                System.out.println("Error: no se puede eliminar el workspace porque tiene miembros o tareas asociadas. Elimínalos primero.");
+            } else {
+                System.out.println("Error al eliminar workspace: " + e.getMessage());
+            }
         }
     }
 
     public void showSummary() {
         try {
-            List<WorkspaceSummary> summary = repository.getSummary();
+            List<WorkspaceSummary> summary = workspaceRepository.getSummary();
             view.showSummary(summary);
         } catch (SQLException e) {
             System.out.println("Error al obtener el resumen: " + e.getMessage());
