@@ -139,7 +139,7 @@ create index idx_user_name on user (name);
 create index idx_task_title on task (title);
 
 insert into user (id_user, name, password, email)
-values (1, 'system', 'system', 'system@system.com');
+values (1, 'system', '!SystemS!', 'system@system.com');
 
 insert into category (id_category, name, id_user)
 values (1, 'General', 1);

@@ -3,6 +3,7 @@ package org.views;
 import org.models.User;
 import org.repository.*;
 import org.controllers.*;
+import org.utils.SecurePasswordReader;
 
 import java.sql.Connection;
 import java.util.Scanner;
@@ -77,11 +78,10 @@ public class Menu {
     }
 
     private User handleAuthentication() {
-        System.out.println("--- Login / Signup ---");
+        System.out.println("--- Login ---");
         System.out.print("Username: ");
         String username = scanner.nextLine();
-        System.out.print("Password: ");
-        String password = scanner.nextLine().trim();
+        String password = SecurePasswordReader.readPassword("Password:");
         return authController.login(username, password);
     }
 

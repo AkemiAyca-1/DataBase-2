@@ -2,6 +2,7 @@ package org.views;
 import org.models.RegularUser;
 import org.models.User;
 import org.repository.UserRepository;
+import org.utils.SecurePasswordReader;
 
 import java.util.List;
 import java.util.Map;
@@ -13,24 +14,31 @@ public class UserView {
 
 
     public User askRegularUserData() {
-        System.out.println("Ingresar Nombre: ");
+        System.out.print("Ingresar Nombre: ");
         String name = scanner.nextLine().trim();
-        if (name.isBlank()){
-            System.out.println("El nombre es obligatorio");
+        if (name.isBlank()) {
+            System.out.println("Error: el nombre es obligatorio.");
             return null;
         }
-        System.out.println("Ingresar Correo: ");
+
+        System.out.print("Ingresar Correo: ");
         String mail = scanner.nextLine().trim();
-        if (mail.isBlank()){
-            System.out.println("El mail es obligatorio");
+        if (!SecurePasswordReader.isEmailValid(mail)) {
+            System.out.println("Error: el correo no tiene un formato válido (ejemplo: usuario@dominio.com).");
             return null;
         }
-        System.out.println("Ingresar Contraseña: ");
-        String password = scanner.nextLine().trim();
-        if (password.isBlank()){
-            System.out.println("La contraseña es obligatorio");
+
+        String password = SecurePasswordReader.readPassword("Ingresar Contraseña:");
+        if (password.isBlank()) {
+            System.out.println("Error: la contraseña es obligatoria.");
             return null;
         }
+        if (!SecurePasswordReader.isPasswordSecure(password)) {
+            System.out.println("Error: la contraseña debe tener al menos 6 caracteres, " +
+                    "2 mayúsculas, 2 minúsculas y 2 caracteres especiales (!@#$%...).");
+            return null;
+        }
+
         return new RegularUser(name, mail, password);
     }
 
