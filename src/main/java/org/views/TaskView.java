@@ -53,11 +53,20 @@ public class TaskView {
             return null;
         }
 
-        System.out.print("  ID de la categoría: ");
-        int idCategory = readInt();
-        if (idCategory <= 0) {
-            showError("ID de categoría inválido.");
-            return null;
+        System.out.print("  ID de la categoría (Enter = General): ");
+        String catInput = scanner.nextLine().trim();
+        int idCategory = 0;
+        if (!catInput.isBlank()) {
+            try {
+                idCategory = Integer.parseInt(catInput);
+                if (idCategory <= 0) {
+                    showError("ID de categoría inválido.");
+                    return null;
+                }
+            } catch (NumberFormatException e) {
+                showError("ID de categoría inválido.");
+                return null;
+            }
         }
 
         Task task = new Task();

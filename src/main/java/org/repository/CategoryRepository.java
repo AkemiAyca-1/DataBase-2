@@ -51,7 +51,7 @@ public class CategoryRepository {
         return list;
     }
 
-    /** Todas las categorías que pertenecen a un usuario específico. */
+
     public List<Category> findByUser(int idUser) throws SQLException {
         String sql = "SELECT id_category, name, id_user FROM category WHERE id_user = ? ORDER BY id_category";
         List<Category> list = new ArrayList<>();
@@ -91,5 +91,16 @@ public class CategoryRepository {
                 rs.getString("name"),
                 rs.getInt("id_user")
         );
+    }
+
+    public Optional<Category> findByName(String name) throws SQLException {
+        String sql = "SELECT id_category, name, id_user FROM category WHERE name = ? LIMIT 1";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, name);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return Optional.of(map(rs));
+            }
+        }
+        return Optional.empty();
     }
 }

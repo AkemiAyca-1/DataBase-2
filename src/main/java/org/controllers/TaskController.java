@@ -1,5 +1,6 @@
 package org.controllers;
 
+import org.models.Category;
 import org.models.Task;
 import org.models.TaskDashboardRow;
 import org.repository.CategoryRepository;
@@ -36,7 +37,14 @@ public class TaskController {
                 view.showError("No existe un user_workspace con id " + task.getIdUserWorkspace());
                 return;
             }
-            if (categoryRepository.findById(task.getIdCategory()).isEmpty()) {
+            if (task.getIdCategory() == 0) {
+                Optional<Category> general = categoryRepository.findByName("General");
+                if (general.isEmpty()) {
+                    view.showError("No existe una categoría 'General' por defecto. Crea una primero.");
+                    return;
+                }
+                task.setIdCategory(general.get().getIdCategory());
+            } else if (categoryRepository.findById(task.getIdCategory()).isEmpty()) {
                 view.showError("No existe una categoría con id " + task.getIdCategory());
                 return;
             }
@@ -73,7 +81,14 @@ public class TaskController {
                 view.showError("No existe un user_workspace con id " + updated.getIdUserWorkspace());
                 return;
             }
-            if (categoryRepository.findById(updated.getIdCategory()).isEmpty()) {
+            if (updated.getIdCategory() == 0) {
+                Optional<Category> general = categoryRepository.findByName("General");
+                if (general.isEmpty()) {
+                    view.showError("No existe una categoría 'General' por defecto.");
+                    return;
+                }
+                updated.setIdCategory(general.get().getIdCategory());
+            } else if (categoryRepository.findById(updated.getIdCategory()).isEmpty()) {
                 view.showError("No existe una categoría con id " + updated.getIdCategory());
                 return;
             }

@@ -73,12 +73,16 @@ create table task_comment
     foreign key (id_user_workspace) references user_workspace (id_user_workspace)
 );
 
-create view task_dashboard
-as
-select t.title, t.created_at, c.name as category_name, u.name as user_name
+create view task_dashboard as
+select
+    t.title,
+    t.created_at,
+    c.name as category_name,
+    u.name as user_name
 from task t
          join category c on t.id_category = c.id_category
-         join user u on c.id_user = u.id_user;
+         join user_workspace uw on t.id_user_workspace = uw.id_user_workspace
+         join user u on uw.id_user = u.id_user;
 
 create view comment_details
 as
@@ -134,11 +138,16 @@ delimiter ;
 create index idx_user_name on user (name);
 create index idx_task_title on task (title);
 
+insert into user (id_user, name, password, email)
+values (1, 'system', 'system', 'system@system.com');
+
+insert into category (id_category, name, id_user)
+values (1, 'General', 1);
+
 SELECT *
 FROM category;
 SELECT *
 FROM workspace;
 SELECT *
 FROM task;
-
-SELECT * from ToDoListEnglish.task_dashboard;
+SELECT * FROM user;
