@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourcePerFileMappings">
+    <file url="file://$PROJECT_DIR$/mysql/init.sql" value="7b6e7e91-5dc6-4814-a2cd-8d717d8f85cf" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/repository/CategoryRepository.java" value="7b6e7e91-5dc6-4814-a2cd-8d717d8f85cf" />
+  </component>
+</project>
