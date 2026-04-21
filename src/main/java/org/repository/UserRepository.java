@@ -21,7 +21,7 @@ public class UserRepository {
     }
 
     public User save(User user) throws SQLException {
-        String query = "insert into user (name, email, password) value (?,?,?);";
+        String query = "insert into `user` (name, email, password) value (?,?,?);";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         preparedStatement.setString(1, user.getName());
@@ -36,7 +36,7 @@ public class UserRepository {
     }
 
     public boolean update(User update) throws SQLException {
-        String query = "update user set name = ?, password = ?, email = ?  where id_user = ?";
+        String query = "update `user` set name = ?, password = ?, email = ?  where id_user = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, update.getName());
         preparedStatement.setString(2, PasswordHasher.hashPassword(update.getPassword()));
@@ -47,7 +47,7 @@ public class UserRepository {
 
 
     public boolean delete(int id_user) throws SQLException {
-        String query = "delete from user where id_user = ?;";
+        String query = "delete from `user` where id_user = ?;";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, id_user);
         boolean answer = preparedStatement.execute();
@@ -58,7 +58,7 @@ public class UserRepository {
     }
 
     public List<User> findAll() throws SQLException {
-        String query = "select * from user;";
+        String query = "select * from `user`;";
         List<User> users = new ArrayList<>();
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -77,7 +77,7 @@ public class UserRepository {
     }
 
     public User getUser(int id){
-        String query = "select * from user where id_user = ?;";
+        String query = "select * from `user` where id_user = ?;";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
@@ -87,7 +87,9 @@ public class UserRepository {
                 String name = resultSet.getString("name");
                 String mail = resultSet.getString("email");
                 String password = resultSet.getString("password");
-                return new RegularUser(name, mail, password);
+                var user = new RegularUser(name, mail, password);
+                user.setId(id);
+                return user;
             }
         }catch (Exception e){
             System.out.println("Usuario no encontrado");
@@ -96,7 +98,7 @@ public class UserRepository {
     }
 
     public User getUserByName(String name, String password ) {
-        String query = "select * from user where name = ? and  password = ?";
+        String query = "select * from `user` where name = ? and  password = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, name);
